@@ -33,6 +33,43 @@ def drop_if_valid(p, column):    # plaserar x och o på spelplanen
             return True
         i = i - 1
 
+# kollar rader vertikalt, horisontellt och diagonalt
+
+def check_vertical(p):
+    for i in range(width):
+        for j in range(3):
+            if board[j][i] == p and board[j + 1][i] == p and board[j + 2][i] == p and board[j + 3][i] == p:
+                print(p + " Vinner!")
+                return True
+
+
+def check_horizontal(p):
+    for i in range(height):
+        for j in range(4):
+            if board[i][j] == p and board[i][j +1] == p and board[i][j + 2] == p and board[i][j + 3] == p:
+                print(p + " Vinner!")
+                return True
+
+
+def check_diagonal(p):
+    for i in range(3):
+        for j in range(4):
+            if board[i][j] == p and board[i + 1][j +1] == p and board[i + 2][j + 2] == p and board[i + 3][j + 3] == p:
+                print(p + " Vinner!")
+                return True
+            
+            if board[i + 3][j] == p and board[i + 2][j +1] == p and board[i + 1][j + 2] == p and board[i][j + 3] == p:
+                print(p + " Vinner!")
+                return True
+
+
+def check_winner(p):
+    if check_vertical(p):
+        return True
+    if check_horizontal(p):
+        return True
+    if check_diagonal(p):
+        return True
 
 col_value = 0
 round_count = 0
@@ -59,4 +96,10 @@ while round_count != (width * height):
     
     else:
         print_board()
-        round_count = round_count + 1;
+        round_count = round_count + 1
+
+    if check_winner(player):
+        break
+    elif not check_winner(player) and round_count == (width * height):
+        print('Oavgjort!')
+        break
